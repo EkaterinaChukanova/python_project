@@ -13,7 +13,7 @@
     <p class="subtitle">Система бронирования<br>аудиторий</p>
     <!-- Старая кнопка с текстом -->
     <button class="svg-button" id="availableRoomsBtn" aria-label="Показать доступные аудитории">
-        <img src="images/icon_3.svg" alt="SVG Icon" class="svg-icon">
+        <img src="images/icon_1.svg" alt="SVG Icon" class="svg-icon">
         <span class="button-label">Доступные</span>
         <span class="button-label">аудитории</span>
     </button>
@@ -23,10 +23,23 @@
         <span class="button-label">Забронировать</span>
         <span class="button-label">аудиторию</span>
     </button>
-    <button class="svg-button" id="availableRoomsBtn" aria-label="Администратор">
-        <img src="images/icon_1.svg" alt="SVG Icon" class="svg-icon">
+    <button class="svg-button" id="adminBtn" aria-label="Администратор">
+        <img src="images/icon_3.svg" alt="SVG Icon" class="svg-icon">
         <span class="button-label">Администратор</span>
     </button>
+
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Вход для администратора</h2>
+            <form id="adminForm">
+                <label for="password">Введите пароль:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Подтвердить</button>
+            </form>
+        </div>
+    </div>
+
     <script src="js/script.js"></script>
 </body>
 </html>
