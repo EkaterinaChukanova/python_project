@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style_adm.css">
+    <title>Roomix - страница для администраторов</title>
+</head>
+<body>
+    <h1>
+        <span>R</span><span>O</span><span>O</span><span>M</span><span>I</span><span>X</span>
+    </h1>
+    <p class="subtitle">Cтраница для администраторов</p>
+    <div class="button-container">
+        <button class="admin-button">Добавить новую аудиторию</button>
+        <button class="admin-button">Ограничить список возможных аудиторий для брони для указанных преподавателей</button>
+        <button class="admin-button">Ограничить максимальное количество часов брони для указанных преподавателей</button>
+    </div>
+    <!-- Модальное окно -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Добавить аудиторию</h2>
+            <form id="roomForm">
+                <label for="institution">Учебное заведение:</label>
+                <input type="text" id="institution" name="institution" required>
+
+                <label for="buildingNumber">Номер корпуса:</label>
+                <input type="text" id="buildingNumber" name="buildingNumber" required>
+
+                <label for="roomNumber">Номер аудитории:</label>
+                <input type="text" id="roomNumber" name="roomNumber" required>
+
+                <label for="capacity">Вместимость:</label>
+                <input type="number" id="capacity" name="capacity" required>
+
+                <label for="equipment">Оборудование:</label>
+                <textarea id="equipment" name="equipment"></textarea>
+
+                <button type="submit">Сохранить</button>
+            </form>
+        </div>
+    </div>
+    <!-- Второе модальное окно -->
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Ограничить список аудиторий для преподавателя</h2>
+            <form id="teacherRoomForm">
+                <!-- Выбор преподавателя -->
+                <label for="teacherSelect">Преподаватель:</label>
+                <select id="teacherSelect" name="teacherSelect" required>
+                    <option value="" disabled selected>Выберите преподавателя</option>
+                    <option value="ivanov">Иванов И.И.</option>
+                    <option value="petrov">Петров П.П.</option>
+                    <option value="sidorov">Сидоров С.С.</option>
+                </select>
+
+                <!-- Выбор учебного заведения -->
+                <label for="institutionSelect">Учебное заведение:</label>
+                <select id="institutionSelect" name="institutionSelect" required>
+                    <option value="" disabled selected>Выберите учебное заведение</option>
+                    <option value="university1">Университет 1</option>
+                    <option value="university2">Университет 2</option>
+                    <option value="college1">Колледж 1</option>
+                </select>
+
+                <!-- Выбор корпуса -->
+                <label for="buildingSelect">Корпус:</label>
+                <select id="buildingSelect" name="buildingSelect" required>
+                    <option value="" disabled selected>Выберите корпус</option>
+                    <option value="building1">Корпус 1</option>
+                    <option value="building2">Корпус 2</option>
+                    <option value="building3">Корпус 3</option>
+                </select>
+
+                <!-- Выбор доступных аудиторий -->
+                <label>Доступные аудитории:</label>
+                <div class="custom-select">
+                    <div class="select-header">Выберите аудитории</div>
+                    <div class="select-options"></div>
+                </div>
+
+                <button type="submit">Сохранить</button>
+            </form>
+        </div>
+    </div>
+    <!-- Третье модальное окно -->
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Ограничить максимальное количество часов брони</h2>
+            <form id="hoursLimitForm">
+                <!-- Выбор преподавателя -->
+                <label for="teacherSelectHours">Преподаватель:</label>
+                <select id="teacherSelectHours" name="teacherSelectHours" required>
+                    <option value="" disabled selected>Выберите преподавателя</option>
+                    <option value="ivanov">Иванов И.И.</option>
+                    <option value="petrov">Петров П.П.</option>
+                    <option value="sidorov">Сидоров С.С.</option>
+                </select>
+
+                <!-- Ввод максимального количества часов -->
+                <label for="maxHours">Максимальное количество часов:</label>
+                <input type="number" id="maxHours" name="maxHours" min="1" required>
+
+                <button type="submit">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/adm.js"></script>
+</body>
+</html>
