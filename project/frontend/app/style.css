@@ -33,35 +33,6 @@ h1 {
     gap: 70px;
 }
 
-    h1 span {
-        display: inline-block;
-        position: relative;
-    }
-
-        h1 span:nth-child(1) {
-            transform: rotate(-33deg) translateY(97px);
-        }
-
-        h1 span:nth-child(2) {
-            transform: rotate(-23deg) translateY(32px);
-        }
-
-        h1 span:nth-child(3) {
-            transform: rotate(-17deg);
-        }
-
-        h1 span:nth-child(4) {
-            transform: rotate(3deg);
-        }
-
-        h1 span:nth-child(5) {
-            transform: rotate(20deg) translateY(34px);
-        }
-
-        h1 span:nth-child(6) {
-            transform: rotate(30deg) translateY(105px);
-        }
-
 .subtitle {
     color: #3e4c94;
     font-family: "my_font_2" !important;
@@ -75,14 +46,14 @@ h1 {
     background: none;
     width: 155px;
     height: 155px;
-    padding-bottom: 40px;
+    padding-bottom: 40px; /* Учитываем высоту текста */
     border: none;
     outline: none;
     cursor: pointer;
-    transition: transform 0.3s ease, filter 0.3s ease;
+    transition: transform 0.3s ease, filter 0.3s ease; /* Обновили transition */
     position: absolute;
     top: 400px;
-    left: 230px; 
+    left: 230px; /* Для первой кнопки */
     z-index: 10;
     display: flex;
     flex-direction: column;
@@ -91,7 +62,7 @@ h1 {
 
     .svg-button:hover {
         transform: scale(1.1);
-        filter: drop-shadow(0 0 15px rgba(0, 102, 255, 0.7));
+        filter: drop-shadow(0 0 15px rgba(0, 102, 255, 0.7)); /* Заменили box-shadow */
     }
 
     .svg-button:active {
@@ -107,7 +78,7 @@ h1 {
     border: none;
     outline: none;
     cursor: pointer;
-    transition: transform 0.3s ease, filter 0.3s ease;
+    transition: transform 0.3s ease, filter 0.3s ease; /* Обновили transition */
     position: absolute;
     top: 400px;
     left: 50%;
@@ -119,8 +90,8 @@ h1 {
 }
 
     .svg-button-center:hover {
-        transform: translateX(-50%) scale(1.1);
-        filter: drop-shadow(0 0 15px rgba(0, 102, 255, 0.7));
+        transform: translateX(-50%) scale(1.1); /* Сохраняем центрирование */
+        filter: drop-shadow(0 0 15px rgba(0, 102, 255, 0.7)); /* Уже было */
     }
 
     .svg-button-center:active {
@@ -149,6 +120,125 @@ h1 {
     color: #e0e0e0;
 }
 
+/* Стили для третьей кнопки */
+.svg-button:nth-child(3) {
+    left: auto;
+    right: 230px; /* Симметрично первой кнопке */
+}
+
+.modal {
+    display: none; /* Скрываем модальное окно по умолчанию */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Стили для содержимого модального окна */
+.modal-content {
+    background: rgba(255, 255, 255, 0.7); /* Полупрозрачный белый фон */
+    backdrop-filter: blur(10px); /* Эффект "матового стекла" */
+    padding: 30px;
+    border-radius: 10px; /* Скругленные углы */
+    width: 350px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Тень для глубины */
+    position: relative;
+    z-index: 1001; /* Выше фона */
+}
+
+    .modal-content h2 {
+        margin-top: 0px; /* Поднимаем надпись вверх */
+        margin-bottom: 20px; /* Отступ снизу для разделения от формы */
+        font-family: "my_font_2", sans-serif; /* Меняем шрифт на my_font_2 */
+        color: rgb(29, 36, 110); /* Меняем цвет (например, тот же, что у .subtitle) */
+        font-size: 20px; /* Размер шрифта (можно настроить) */
+    }
+    .modal-content form {
+        display: flex;
+        flex-direction: column;
+        gap: 25px; /* Увеличиваем расстояние между элементами формы */
+    }
+
+    .modal-content label {
+        font-weight: bold;
+        color: rgb(13, 25, 76);
+        font-size: 20px;
+    }
+
+    .modal-content input {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc; /* Добавляем границу для видимости */
+        border-radius: 8px; /* Закругляем углы */
+        outline: none; /* Убираем стандартный контур при фокусе */
+        transition: border-color 0.3s ease; /* Плавный переход для границы */
+    }
+
+    .modal-content input:focus {
+        border-color: rgb(29, 36, 110); /* Цвет границы при фокусе */
+    }
+
+    .modal-content button {
+        padding: 10px;
+        font-size: 16px;
+        border: none; /* Убираем стандартную границу */
+        border-radius: 8px; /* Закругляем углы */
+        background-color: rgb(29, 36, 110); /* Цвет фона кнопки */
+        color: white; /* Цвет текста */
+        cursor: pointer;
+        transition: background-color 0.3s ease; /* Плавный переход для фона */
+    }
+
+        .modal-content button:hover {
+            background-color: rgb(13, 25, 76); /* Темнее при наведении */
+        }
+
+    .modal-content input.error {
+        border-color: red;
+        animation: shake 0.3s ease;
+    }
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    50% {
+        transform: translateX(5px);
+    }
+
+    75% {
+        transform: translateX(-5px);
+    }
+}
+
+.close {
+    position: absolute;
+    top: 10px; /* Отступ сверху */
+    right: 10px; /* Отступ справа */
+    font-size: 24px; /* Размер крестика */
+    font-weight: bold;
+    color: #333; /* Цвет крестика */
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+    .close:hover {
+        color: rgb(70, 149, 184); /* Цвет при наведении (например, красный) */
+    }
+    .close:active {
+        transform: rotate(90deg); /* Вращение на 90 градусов при нажатии */
+    }
 /* Стили для третьей кнопки */
 .svg-button:nth-child(3) {
     left: auto;
