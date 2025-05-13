@@ -1,0 +1,10 @@
+.idea
+.venv
+frontend/.env.local
+frontend/.env.prod
+frontend/db.sqlite3
+backend/.env.local
+backend/.env.prod
+backend/db.sqlite3
+tg-bot/.env.local
+tg-bot/.env.prod
