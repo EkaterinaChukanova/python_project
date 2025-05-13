@@ -1,76 +1,97 @@
-# Comments are provided throughout this file to help you get started.
-# If you need more help, visit the Docker Compose reference guide at
-# https://docs.docker.com/go/compose-spec-reference/
-
-# Here the instructions define your application as a service called "server".
-# This service is built from the Dockerfile in the current directory.
-# You can add other services your application may depend on here, such as a
-# database or a cache. For examples, see the Awesome Compose repository:
-# https://github.com/docker/awesome-compose
 services:
   backend:
     container_name: backend
     build: ./backend
-    #    image: backend
-    expose: 8000
+    ports:
+      - "8000:8000"
+    networks:
+      - nginx_network
     environment:
-      - SECRET_KEY = django-insecure-%4!fctsed7cv17dy#u#sn9+4rjw+$)*1#b#^i5f1u3s*6&+t6o
-      - DEBUG = 0
-      - ALLOWED_HOSTS = 77.239.96.124 127.0.0.1 localhost 0.0.0.0
+      - ENVIRONMENT_FILE=.env.local
+      - CELERY_BROKER_URL=redis://redis:6379/0
     depends_on:
-      - db
+      #      - db
+      - redis
+    command: >
+      bash -c "celery -A backend worker --loglevel=info &
+      gunicorn backend.wsgi:application --bind 0.0.0.0:8080 --timeout 120"
 
   frontend:
     container_name: frontend
     build: ./frontend
-    #    image: frontend
-    expose: 8080
+    ports:
+      - "8080:8080"
+    volumes:
+      - static-data:/frontend/static
+    networks:
+      - nginx_network
+    environment:
+      - ENVIRONMENT_FILE=.env.local
     depends_on:
       - backend
+    entrypoint: /entrypoint.sh
+    command: >
+      bash -c "gunicorn frontend.wsgi:application --bind 0.0.0.0:8000 --timeout 120"
 
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    networks:
+      - nginx_network
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 30s
+      retries: 3
 
   tg-bot:
     container_name: tg-bot
     build: ./tg-bot
-    #    image: tg-bot
     environment:
-      - TOKEN = 7844200914:AAFPCl39h-hGhqfpFhShyReSjRQXEBogyes
+      - ENVIRONMENT_FILE=.env.local
     depends_on:
       - backend
 
 
-  nginx:
-    container_name: nginx
-    image: nginx:latest
-    volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - ./frontend/static:/app/static
-    ports: 80
-    depends_on:
-      - frontend
-
-  db:
-    container_name: db
-    image: postgres
-    restart: always
-    volumes:
-      - db-data:/var/lib/postgresql/data
-    environment:
-      - NAME = postgres
-      - PASSWORD = postgres
-      - HOST = db
-    expose:
-      - 5432
-    healthcheck:
-      test: [ "CMD", "pg_isready" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-
-
 volumes:
-  db-data:
+  static-data:
+    external: true
+
+networks:
+  nginx_network:
+    external: true
+
+#  nginx:
+#    container_name: nginx
+#    image: nginx:latest
+#    volumes:
+#      - ./nginx/krmch.ru.conf:/etc/nginx/conf.d/krmch.ru.conf
+#      - ./frontend/static:/temporary/static
+#    ports: 80
+#    depends_on:
+#      - frontend
+
+#  db:
+#    container_name: db
+#    image: postgres
+#    restart: always
+#    volumes:
+#      - db-data:/var/lib/postgresql/data
+#    environment:
+#      - NAME = postgres
+#      - PASSWORD = postgres
+#      - HOST = db
+#    expose:
+#      - 5432
+#    healthcheck:
+#      test: [ "CMD", "pg_isready" ]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
+
+
 
 
 

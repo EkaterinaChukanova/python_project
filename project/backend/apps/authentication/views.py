@@ -9,13 +9,13 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 
 from apps.authentication.serializers import UserSerializer
+from .decorators import authenticated
 
 
 # Create your views here.
 
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
 def signup(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
@@ -29,7 +29,6 @@ def signup(request):
 
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
 def login(request):
     user = get_object_or_404(User, email=request.data['email'])
     if not user.check_password(request.data['password']):
@@ -39,9 +38,8 @@ def login(request):
 
 
 @api_view(['GET'])
-# @authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def test_token(request):
-    return Response(f"passed for {request.user.email}", status=status.HTTP_200_OK)
-
-
+@authenticated
+def verify_token(request):
+    token = request.COOKIES.get('Token')
+    user = Token.objects.get(key=token).user
+    return Response({"user": user}, status=status.HTTP_200_OK)

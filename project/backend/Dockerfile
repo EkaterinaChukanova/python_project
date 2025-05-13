@@ -1,14 +1,12 @@
-FROM python:3.13
+FROM python:3.9
 
 WORKDIR /backend
 
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
 COPY . .
 
-RUN python manage.py makemigrations \
-    python manage.py migrate \
-    pip install -r requirements.txt
+RUN python manage.py migrate
 
-EXPOSE 8000
-
-#CMD gunicorn 'backend.backend.wsgi' --bind=0.0.0.0:8000
-CMD ["gunicorn", "backend.backend.wsgi:application", "--bind", "0.0.0.0:8000"]

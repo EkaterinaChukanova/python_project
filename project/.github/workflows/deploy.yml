@@ -1,0 +1,30 @@
+name: Deploy to server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan 77.239.96.124 >> ~/.ssh/known_hosts
+
+      - name: Deploy to server
+        run: |
+          ssh root@77.239.96.124 << 'EOF'
+            set -e
+            cd ~/krmch.ru/
+            git pull origin main
+            docker-compose down
+            docker-compose up --build -d
+          EOF
