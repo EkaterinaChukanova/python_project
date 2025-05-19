@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style_adm.css">
     <title>Roomix - страница для администраторов</title>
 </head>
 <body>
+    <a href="index.html" class="home-link">
+        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40" height="40" viewBox="0 0 40 40">
+            <path fill="#dff0fe" d="M3.5,38.5V13.3L20,3.6l16.5,9.7v25.2H3.5z"></path>
+            <path fill="#4788c7" d="M20,4.2l16,9.4V38H4V13.6L20,4.2 M20,3L3,13v26h34V13L20,3L20,3z"></path>
+            <path fill="#b6dcfe" d="M20,4.6L1.5,16v-3.1L20,1.6l18.5,11.3V16L20,4.6z"></path>
+            <path fill="#4788c7" d="M20,2.2l18,11v1.9L20.5,4.4L20,4.1l-0.5,0.3L2,15.1v-1.9L20,2.2 M20,1L1,12.6v4.2L20,5.2l19,11.6v-4.2L20,1	L20,1z"></path>
+            <path fill="#b6dcfe" d="M14.5,21.5h11v17h-11V21.5z"></path>
+            <path fill="#4788c7" d="M25,22v16H15V22H25 M26,21H14v18h12V21L26,21z"></path>
+            <path fill="#4788c7" d="M23,30c-0.6,0-1,0.4-1,1s0.4,1,1,1s1-0.4,1-1S23.6,30,23,30z"></path>
+        </svg>
+    </a>
     <h1>
         <span>R</span><span>O</span><span>O</span><span>M</span><span>I</span><span>X</span>
     </h1>
@@ -16,23 +27,27 @@
         <button class="admin-button">Ограничить список возможных аудиторий для брони для указанных преподавателей</button>
         <button class="admin-button">Ограничить максимальное количество часов брони для указанных преподавателей</button>
     </div>
-    <!-- Модальное окно -->
+    <!-- Модальное окно: Добавление аудитории -->
     <div id="modal" class="modal">
         <div class="modal-content">
             <span class="close">×</span>
             <h2>Добавить аудиторию</h2>
             <form id="roomForm">
                 <label for="institution">Учебное заведение:</label>
-                <input type="text" id="institution" name="institution" required>
+                <select id="institution" name="institution" required>
+                    <option value="" disabled selected>Выберите учебное заведение</option>
+                </select>
 
-                <label for="buildingNumber">Номер корпуса:</label>
-                <input type="text" id="buildingNumber" name="buildingNumber" required>
+                <label for="buildingNumber">Корпус:</label>
+                <select id="buildingNumber" name="buildingNumber" required>
+                    <option value="" disabled selected>Выберите корпус</option>
+                </select>
 
                 <label for="roomNumber">Номер аудитории:</label>
                 <input type="text" id="roomNumber" name="roomNumber" required>
 
                 <label for="capacity">Вместимость:</label>
-                <input type="number" id="capacity" name="capacity" required>
+                <input type="number" id="capacity" name="capacity" min="1" required>
 
                 <label for="equipment">Оборудование:</label>
                 <textarea id="equipment" name="equipment"></textarea>
@@ -41,66 +56,47 @@
             </form>
         </div>
     </div>
-    <!-- Второе модальное окно -->
+    <!-- Модальное окно: Ограничение аудиторий -->
     <div id="modal2" class="modal">
         <div class="modal-content">
             <span class="close">×</span>
             <h2>Ограничить список аудиторий для преподавателя</h2>
             <form id="teacherRoomForm">
-                <!-- Выбор преподавателя -->
                 <label for="teacherSelect">Преподаватель:</label>
                 <select id="teacherSelect" name="teacherSelect" required>
                     <option value="" disabled selected>Выберите преподавателя</option>
-                    <option value="ivanov">Иванов И.И.</option>
-                    <option value="petrov">Петров П.П.</option>
-                    <option value="sidorov">Сидоров С.С.</option>
                 </select>
 
-                <!-- Выбор учебного заведения -->
                 <label for="institutionSelect">Учебное заведение:</label>
                 <select id="institutionSelect" name="institutionSelect" required>
                     <option value="" disabled selected>Выберите учебное заведение</option>
-                    <option value="university1">Университет 1</option>
-                    <option value="university2">Университет 2</option>
-                    <option value="college1">Колледж 1</option>
                 </select>
 
-                <!-- Выбор корпуса -->
                 <label for="buildingSelect">Корпус:</label>
                 <select id="buildingSelect" name="buildingSelect" required>
                     <option value="" disabled selected>Выберите корпус</option>
-                    <option value="building1">Корпус 1</option>
-                    <option value="building2">Корпус 2</option>
-                    <option value="building3">Корпус 3</option>
                 </select>
 
-                <!-- Выбор доступных аудиторий -->
-                <label>Доступные аудитории:</label>
-                <div class="custom-select">
-                    <div class="select-header">Выберите аудитории</div>
-                    <div class="select-options"></div>
-                </div>
+                <label for="roomSelect">Доступные аудитории:</label>
+                <select id="roomSelect" name="allowedRooms" multiple size="5" disabled>
+                    <option value="" disabled selected>Сначала выберите корпус</option>
+                </select>
 
                 <button type="submit">Сохранить</button>
             </form>
         </div>
     </div>
-    <!-- Третье модальное окно -->
+    <!-- Модальное окно: Ограничение часов -->
     <div id="modal3" class="modal">
         <div class="modal-content">
             <span class="close">×</span>
             <h2>Ограничить максимальное количество часов брони</h2>
             <form id="hoursLimitForm">
-                <!-- Выбор преподавателя -->
                 <label for="teacherSelectHours">Преподаватель:</label>
                 <select id="teacherSelectHours" name="teacherSelectHours" required>
                     <option value="" disabled selected>Выберите преподавателя</option>
-                    <option value="ivanov">Иванов И.И.</option>
-                    <option value="petrov">Петров П.П.</option>
-                    <option value="sidorov">Сидоров С.С.</option>
                 </select>
 
-                <!-- Ввод максимального количества часов -->
                 <label for="maxHours">Максимальное количество часов:</label>
                 <input type="number" id="maxHours" name="maxHours" min="1" required>
 
