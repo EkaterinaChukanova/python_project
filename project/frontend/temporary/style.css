@@ -14,97 +14,74 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     min-height: 100vh;
-    display: block;
+    margin: 0;
+    padding: 0;
     position: relative;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+/* === Контейнер для всех кнопок === */
+.button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 200px;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    margin-top: 100px;
+    flex-wrap: wrap;
+}
+
+/* === Заголовок === */
 h1 {
     color: #0c0526;
     text-align: center;
     font-family: "my_font";
     font-size: 130px;
     margin-top: 60px;
-    position: relative;
     display: flex;
     justify-content: center;
-    width: 200px;
-    margin-left: auto;
-    margin-right: auto;
     gap: 70px;
+    flex-wrap: wrap;
 }
 
 .subtitle {
     color: #3e4c94;
-    font-family: "my_font_2" !important;
+    font-family: "my_font_2";
     font-size: 25px;
     text-align: center;
     margin-top: -70px;
 }
 
-/* Стили для первой и третьей кнопки */
-.svg-button {
-    background: none;
-    width: 155px;
-    height: 155px;
-    padding-bottom: 40px; /* Учитываем высоту текста */
-    border: none;
-    outline: none;
-    cursor: pointer;
-    transition: transform 0.3s ease, filter 0.3s ease; /* Обновили transition */
-    position: absolute;
-    top: 400px;
-    left: 230px; /* Для первой кнопки */
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-    .svg-button:hover {
-        transform: scale(1.1);
-        filter: drop-shadow(0 0 15px rgba(0, 102, 255, 0.7)); /* Заменили box-shadow */
-    }
-
-    .svg-button:active {
-        transform: scale(0.9);
-    }
-
-/* Стили для центральной кнопки */
+/* === Общие стили для всех SVG-кнопок === */
+.svg-button,
 .svg-button-center {
     background: none;
     width: 155px;
     height: 155px;
-    padding-bottom: 40px;
     border: none;
     outline: none;
     cursor: pointer;
-    transition: transform 0.3s ease, filter 0.3s ease; /* Обновили transition */
-    position: absolute;
-    top: 400px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-end;
+    transition: transform 0.3s ease, filter 0.3s ease;
 }
-
-    .svg-button-center:hover {
-        transform: translateX(-50%) scale(1.1); /* Сохраняем центрирование */
-        filter: drop-shadow(0 0 15px rgba(0, 102, 255, 0.7)); /* Уже было */
-    }
-
-    .svg-button-center:active {
-        transform: translateX(-50%) scale(0.9);
-    }
 
 .svg-icon {
     width: 100%;
     height: auto;
     display: block;
     opacity: 1;
+    transition: transform 0.3s ease;
 }
 
+/* === Текст на кнопках === */
 .button-label {
     display: block;
     font-size: 15px;
@@ -113,6 +90,7 @@ h1 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     margin-top: 5px;
     transition: color 0.3s ease;
+    text-align: center;
 }
 
 .svg-button:hover .button-label,
@@ -120,14 +98,56 @@ h1 {
     color: #e0e0e0;
 }
 
-/* Стили для третьей кнопки */
-.svg-button:nth-child(3) {
-    left: auto;
-    right: 230px; /* Симметрично первой кнопке */
+/* === Стили для кнопок === */
+.svg-button:hover,
+.svg-button-center:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 15px rgba(0, 102, 255, 0.7));
 }
 
+.svg-button:active,
+.svg-button-center:active {
+    transform: scale(0.9);
+}
+
+/* === Кнопка "Войти через Google" === */
+.login-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.google-login-button {
+    font-family: "my_font_2", sans-serif;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #444;
+    border: 2px solid #3e4c94;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+}
+
+    .google-login-button:hover {
+        background-color: rgba(255, 255, 255, 1);
+        color: #000;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        transform: translateY(-2px);
+    }
+
+    .google-login-button:active {
+        transform: translateY(0);
+    }
+
+/* === Модальное окно === */
 .modal {
-    display: none; /* Скрываем модальное окно по умолчанию */
+    display: none;
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -139,30 +159,29 @@ h1 {
     align-items: center;
 }
 
-/* Стили для содержимого модального окна */
 .modal-content {
-    background: rgba(255, 255, 255, 0.7); /* Полупрозрачный белый фон */
-    backdrop-filter: blur(10px); /* Эффект "матового стекла" */
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
     padding: 30px;
-    border-radius: 10px; /* Скругленные углы */
+    border-radius: 10px;
     width: 350px;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Тень для глубины */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     position: relative;
-    z-index: 1001; /* Выше фона */
 }
 
     .modal-content h2 {
-        margin-top: 0px; /* Поднимаем надпись вверх */
-        margin-bottom: 20px; /* Отступ снизу для разделения от формы */
-        font-family: "my_font_2", sans-serif; /* Меняем шрифт на my_font_2 */
-        color: rgb(29, 36, 110); /* Меняем цвет (например, тот же, что у .subtitle) */
-        font-size: 20px; /* Размер шрифта (можно настроить) */
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-family: "my_font_2";
+        color: rgb(29, 36, 110);
+        font-size: 20px;
     }
+
     .modal-content form {
         display: flex;
         flex-direction: column;
-        gap: 25px; /* Увеличиваем расстояние между элементами формы */
+        gap: 25px;
     }
 
     .modal-content label {
@@ -174,29 +193,29 @@ h1 {
     .modal-content input {
         padding: 10px;
         font-size: 16px;
-        border: 1px solid #ccc; /* Добавляем границу для видимости */
-        border-radius: 8px; /* Закругляем углы */
-        outline: none; /* Убираем стандартный контур при фокусе */
-        transition: border-color 0.3s ease; /* Плавный переход для границы */
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        outline: none;
+        transition: border-color 0.3s ease;
     }
 
-    .modal-content input:focus {
-        border-color: rgb(29, 36, 110); /* Цвет границы при фокусе */
-    }
+        .modal-content input:focus {
+            border-color: rgb(29, 36, 110);
+        }
 
     .modal-content button {
         padding: 10px;
         font-size: 16px;
-        border: none; /* Убираем стандартную границу */
-        border-radius: 8px; /* Закругляем углы */
-        background-color: rgb(29, 36, 110); /* Цвет фона кнопки */
-        color: white; /* Цвет текста */
+        border: none;
+        border-radius: 8px;
+        background-color: rgb(29, 36, 110);
+        color: white;
         cursor: pointer;
-        transition: background-color 0.3s ease; /* Плавный переход для фона */
+        transition: background-color 0.3s ease;
     }
 
         .modal-content button:hover {
-            background-color: rgb(13, 25, 76); /* Темнее при наведении */
+            background-color: rgb(13, 25, 76);
         }
 
     .modal-content input.error {
@@ -224,23 +243,55 @@ h1 {
 
 .close {
     position: absolute;
-    top: 10px; /* Отступ сверху */
-    right: 10px; /* Отступ справа */
-    font-size: 24px; /* Размер крестика */
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
     font-weight: bold;
-    color: #333; /* Цвет крестика */
+    color: #333;
     cursor: pointer;
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
     .close:hover {
-        color: rgb(70, 149, 184); /* Цвет при наведении (например, красный) */
+        color: rgb(70, 149, 184);
     }
+
     .close:active {
-        transform: rotate(90deg); /* Вращение на 90 градусов при нажатии */
+        transform: rotate(90deg);
     }
-/* Стили для третьей кнопки */
-.svg-button:nth-child(3) {
-    left: auto;
-    right: 230px;
+
+/* Адаптивность */
+@media (max-width: 900px) {
+    h1 {
+        font-size: 80px;
+        gap: 40px;
+    }
+
+    .subtitle {
+        font-size: 20px;
+        margin-top: -40px;
+    }
+
+    .button-wrapper {
+        gap: 50px;
+        margin-top: 50px;
+    }
 }
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 60px;
+        gap: 20px;
+    }
+
+    .button-wrapper {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .google-login-button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+}
+
