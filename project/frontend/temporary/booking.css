@@ -19,16 +19,17 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-bottom: 40px;
 }
 
 header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 0 !important;
 }
 
 h1 {
     color: #0c0526;
-    font-family: "my_font", sans-serif;
+    font-family: "my_font", sans-serif; /* Добавляем запасной шрифт */
     font-size: 130px;
     margin-top: 60px;
     position: relative;
@@ -40,35 +41,6 @@ h1 {
     gap: 70px;
 }
 
-    h1 span {
-        display: inline-block;
-        position: relative;
-    }
-
-        h1 span:nth-child(1) {
-            transform: rotate(-33deg) translateY(97px);
-        }
-
-        h1 span:nth-child(2) {
-            transform: rotate(-23deg) translateY(32px);
-        }
-
-        h1 span:nth-child(3) {
-            transform: rotate(-17deg);
-        }
-
-        h1 span:nth-child(4) {
-            transform: rotate(3deg);
-        }
-
-        h1 span:nth-child(5) {
-            transform: rotate(20deg) translateY(34px);
-        }
-
-        h1 span:nth-child(6) {
-            transform: rotate(30deg) translateY(105px);
-        }
-
 .subtitle {
     color: #3e4c94;
     font-family: "my_font_2";
@@ -78,7 +50,7 @@ h1 {
 }
 
 .booking-form {
-    background: rgba(255, 255, 255, 0.9);
+    background: white;
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
@@ -94,7 +66,7 @@ h1 {
 }
 
     .form-group label {
-        font-family: Arial, sans-serif;
+        font-family: Arial, sans-serif; /* Временно заменяем шрифт */
         color: #3e4c94;
         font-size: 18px;
         margin-bottom: 5px;
@@ -106,14 +78,14 @@ h1 {
         font-size: 16px;
         border: 2px solid #3e4c94;
         border-radius: 5px;
-        font-family: Arial, sans-serif;
+        font-family: Arial, sans-serif; /* Временно заменяем шрифт */
         color: #0c0526;
     }
 
 .submit-button {
     background: #3e4c94;
     color: white;
-    font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif; /* Временно заменяем шрифт */
     font-size: 18px;
     padding: 10px;
     border: none;
@@ -133,7 +105,7 @@ h1 {
 
 .back-link {
     margin-top: 20px;
-    font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif; /* Временно заменяем шрифт */
     color: #3e4c94;
     font-size: 16px;
     text-decoration: none;
